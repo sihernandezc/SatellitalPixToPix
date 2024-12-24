@@ -5,6 +5,7 @@ import rasterio
 import numpy as np
 import matplotlib.pyplot as plt
 
+fromo typing import Tuple
 from tqdm.notebook import tqdm
 from torchvision.utils import make_grid
 from torch.utils.data import Dataset, DataLoader
@@ -26,10 +27,13 @@ class CustomDataset(Dataset):
         self.input_channels = input_channels
         self.label_channels = label_channels
 
-    def __len__(self):
+    def __len__(self)->int:
         return len(self.input_files)
 
-    def __getitem__(self, idx):
+    def __getitem__(
+            self, 
+            idx:int
+        )->Tuple[torch.FloatTensor,torch.FloatTensor]:
         input_path = self.input_files[idx]
         label_path = self.label_files[idx]
 
@@ -70,7 +74,7 @@ def dataloader_from_folders(
         target_shape:int=256,
         input_channels:int=6,
         label_channels:int=2,
-    ):
+    )->DataLoader:
 
     ### Definir las rutas de las carpetas
     input_ = f"{path_folder}\{input_folder}"
