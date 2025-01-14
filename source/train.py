@@ -84,7 +84,7 @@ class TrainModel():
             self.config['display_step'],
             self.config['RGB_fake'],
             self.config['RGB_real'],
-            self.config['cur_step'],
+            self.cur_step,
             self.config['input_dim'],
             self.config['real_dim'],
             self.config['target_shape'],
@@ -110,7 +110,7 @@ class TrainModel():
             self.disc,
             self.disc_opt,
             self.cur_step,
-            self.config['path_weights'],
+            self.config['model_weights'],
         )
 
         path_gen_loss = f"{self.config['path_loss']}\{self.config['gen_loss_folder']}\{gen_loss_}"
