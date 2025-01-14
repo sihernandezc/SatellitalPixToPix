@@ -1,10 +1,13 @@
-ipywidgets
-torch==2.2
-torchvision==0.17
-torchaudio==2.2
---index-url https://download.pytorch.org/whl/cu121
-matplotlib==3.9
+#ipywidgets
+python-dotenv
+matplotlib==3.10
 rasterio==1.4
 tqdm==4.66
 numpy==1.26
 urllib3==2.2
+numpy
+torch==2.2
+torchvision==0.17
+torchaudio==2.2
+--index-url https://download.pytorch.org/whl/cu121
+
