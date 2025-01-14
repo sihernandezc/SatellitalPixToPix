@@ -5,7 +5,7 @@ import rasterio
 import numpy as np
 import matplotlib.pyplot as plt
 
-fromo typing import Tuple
+from typing import Tuple
 from tqdm.notebook import tqdm
 from torchvision.utils import make_grid
 from torch.utils.data import Dataset, DataLoader
