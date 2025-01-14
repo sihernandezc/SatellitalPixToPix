@@ -9,6 +9,8 @@ load_dotenv()
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+print(f"El dispositivo es {device}")
+
 class Configuration():
     def __init__(self):
         self.n_epochs: int = 1
