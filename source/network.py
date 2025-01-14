@@ -11,13 +11,13 @@ from torchvision.utils import make_grid
 from torch.utils.data import Dataset, DataLoader
 
 def show_tensor_images(
-        image_tensor,
-        RGB,
-        num_images=25,
-        size=(1, 28, 28),
-        alt = 10,
-        anch = 10
-    ):
+        image_tensor: torch.Tensor,
+        RGB:tuple,
+        num_images:int = 25,
+        size:int = (1, 28, 28),
+        alt:int = 10,
+        anch:int = 10
+    )->None:
     '''
     Function for visualizing images: Given a tensor of images, number of images, and
     size per image, plots and prints the images in an uniform grid.
@@ -29,7 +29,7 @@ def show_tensor_images(
     plt.imshow(image_grid.permute(1, 2, 0).squeeze())
     plt.show()
 
-def crop(image, new_shape):
+def crop(image: torch.Tensor, new_shape: torch.Size) -> torch.Tensor:
     '''
     Function for cropping an image tensor: Given an image tensor and the new shape,
     crops to the center pixels (assumes that the input's size and the new size are
@@ -54,7 +54,12 @@ class ContractingBlock(nn.Module):
     Values:
         input_channels: the number of channels to expect from a given input
     '''
-    def __init__(self, input_channels, use_dropout=False, use_bn=True):
+    def __init__(
+            self, 
+            input_channels: int, 
+            use_dropout: bool = False, 
+            use_bn: bool = True
+        )->None:
         super(ContractingBlock, self).__init__()
         self.conv1 = nn.Conv2d(input_channels, input_channels * 2, kernel_size=3, padding=1)
         self.conv2 = nn.Conv2d(input_channels * 2, input_channels * 2, kernel_size=3, padding=1)
@@ -67,7 +72,7 @@ class ContractingBlock(nn.Module):
             self.dropout = nn.Dropout()
         self.use_dropout = use_dropout
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor)->torch.tensor:
         '''
         Function for completing a forward pass of ContractingBlock:
         Given an image tensor, completes a contracting block and returns the transformed tensor.
@@ -97,7 +102,7 @@ class ExpandingBlock(nn.Module):
     Values:
         input_channels: the number of channels to expect from a given input
     '''
-    def __init__(self, input_channels, use_dropout=False, use_bn=True):
+    def __init__(self, input_channels: int, use_dropout: bool = False, use_bn: bool = True)->None:
         super(ExpandingBlock, self).__init__()
         self.upsample = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
         self.conv1 = nn.Conv2d(input_channels, input_channels // 2, kernel_size=2)
@@ -111,7 +116,7 @@ class ExpandingBlock(nn.Module):
             self.dropout = nn.Dropout()
         self.use_dropout = use_dropout
 
-    def forward(self, x, skip_con_x):
+    def forward(self, x: torch.Tensor, skip_con_x: torch.Tensor) -> torch.Tensor:
         '''
         Function for completing a forward pass of ExpandingBlock:
         Given an image tensor, completes an expanding block and returns the transformed tensor.
@@ -148,11 +153,11 @@ class FeatureMapBlock(nn.Module):
         input_channels: the number of channels to expect from a given input
         output_channels: the number of channels to expect for a given output
     '''
-    def __init__(self, input_channels, output_channels):
+    def __init__(self, input_channels: int, output_channels: int)->None:
         super(FeatureMapBlock, self).__init__()
         self.conv = nn.Conv2d(input_channels, output_channels, kernel_size=1)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor)-> torch.Tensor:
         '''
         Function for completing a forward pass of FeatureMapBlock:
         Given an image tensor, returns it mapped to the desired number of channels.
@@ -229,9 +234,7 @@ class Discriminator(nn.Module):
         self.contract2 = ContractingBlock(hidden_channels * 2)
         self.contract3 = ContractingBlock(hidden_channels * 4)
         self.contract4 = ContractingBlock(hidden_channels * 8)
-        #### START CODE HERE ####
         self.final = nn.Conv2d(hidden_channels * 16, 1, kernel_size=1)
-        #### END CODE HERE ####
 
     def forward(self, x, y):
         x = torch.cat([x, y], axis=1)
