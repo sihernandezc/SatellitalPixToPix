@@ -110,7 +110,7 @@ class TrainModel():
             self.disc,
             self.disc_opt,
             self.cur_step,
-            self.config['model_weights'],
+            self.config['path_weights'],
         )
 
         path_gen_loss = f"{self.config['path_loss']}\{self.config['gen_loss_folder']}\{gen_loss_}"
