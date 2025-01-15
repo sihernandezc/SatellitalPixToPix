@@ -48,6 +48,7 @@ class Configuration():
             "n_epochs":self.n_epochs,
             "step" : self.step,
             "path_folder":self.path_folder,
+            "path_weights":self.path_weights,
             "model_weights":f"{self.path_weights}{self.weight_name}{self.step}.pth",
             "obtener_el_dataloader":self.obtener_el_dataloader,
             "iniciar_modelo":self.iniciar_modelo,
